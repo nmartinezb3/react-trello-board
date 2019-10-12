@@ -18,7 +18,7 @@ import {
 
 const Board = props => {
   const onDragEnd = result => {
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
     // dropped outside the list
     if (!destination) {
       return;
@@ -30,9 +30,10 @@ const Board = props => {
       // Drop in other list
       props.moveCardToList(
         source.droppableId,
-        source.index,
+        draggableId,
         destination.droppableId,
-        destination.index
+        destination.index,
+
       );
     }
   };
@@ -44,11 +45,11 @@ const Board = props => {
             <CardList
               key={list.id}
               droppableId={list.id}
-              listName={list.name}
-              cards={list.cards}
+              list={list}
               onChangeListName={listName => props.onChangeListName(listIndex, listName)}
               onRemoveList={() => props.onRemoveList(listIndex)}
               onChangeCardContent={(cardIndex, content) => props.onChangeCardContent(listIndex, cardIndex, content)}
+              searchText={props.search}
             />
           ))}
         </DragDropContext>
@@ -65,10 +66,12 @@ Board.propTypes = {
   onChangeListName: PropTypes.func,
   onRemoveList: PropTypes.func,
   onChangeCardContent: PropTypes.func,
+  search: PropTypes.string,
   addList: PropTypes.func,
 };
 const mapStateToProps = state => ({
   lists: state.board.lists,
+  search: state.board.search,
 });
 
 const mapDispatchToProps = dispatch => ({

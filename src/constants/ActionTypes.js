@@ -7,3 +7,4 @@ export const RE_ORDER_LIST = 'RE_ORDER_LIST';
 export const MOVE_CARD_TO_LIST = 'MOVE_CARD_TO_LIST';
 export const SET_CARD_CONTENT = 'SET_CARD_CONTENT';
 export const SET_LIST_NAME = 'SET_LIST_NAME';
+export const SET_SEARCH = 'SET_SEARCH';

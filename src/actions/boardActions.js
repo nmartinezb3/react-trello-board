@@ -41,15 +41,22 @@ export const reOrderList = (listId, cardSourceIndex, cardDestinationIndex) => ({
 
 export const moveCardToList = (
   sourceListId,
-  cardSourceIndex,
+  cardId,
   destinationListId,
   cardDestinationIndex
 ) => ({
   type: types.MOVE_CARD_TO_LIST,
   data: {
     sourceListId,
-    cardSourceIndex,
+    cardId,
     destinationListId,
     cardDestinationIndex
   }
 });
+
+
+export const setSearch = searchText => ({
+  type: types.SET_SEARCH,
+  data: searchText
+})
+;

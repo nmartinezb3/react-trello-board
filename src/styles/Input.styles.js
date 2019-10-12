@@ -6,7 +6,7 @@ export const Input = styled.input`
   border: none;
   box-shadow: none;
   box-sizing: border-box;
-  color: ${props => props.theme.primaryFont};
+  color: white;
   float: left;
   font-size: 13px;
   height: 32px;
@@ -19,6 +19,19 @@ export const Input = styled.input`
   width: 100%;
   &:focus {
     background-color: white;
+    color: ${props => props.theme.primaryFont};
+  }
+  
+  ::-webkit-input-placeholder { 
+    color: white;
+  }
+
+  :-ms-input-placeholder {
+    color: white;
+  }
+
+  ::placeholder {
+    color: white;
   }
 `;
 export const InputContainer = styled.div`

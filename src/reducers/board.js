@@ -19,6 +19,12 @@ const board = (state = initialState, action) => {
   let newState;
   let newList;
   switch (action.type) {
+    case types.SET_SEARCH:
+      return {
+        ...state,
+        search: action.data
+      };
+
     case types.ADD_LIST:
       newState = [
         ...state.lists,
@@ -113,11 +119,11 @@ const board = (state = initialState, action) => {
         list => list.id === action.data.destinationListId
       );
       const destinationList = state.lists[destinationListIndex];
-
+      const cardSourceIndex = sourceList.cards.findIndex(item => item.id === action.data.cardId);
       const { newSourceList, newDestinationList } = BoardHelper.moveCardToList(
         sourceList.cards,
         destinationList.cards,
-        action.data.cardSourceIndex,
+        cardSourceIndex,
         action.data.cardDestinationIndex
       );
 
