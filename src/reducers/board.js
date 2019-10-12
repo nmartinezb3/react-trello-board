@@ -18,6 +18,7 @@ const initialState = {
 
 const board = (state = initialState, action) => {
   let newState;
+  let newList;
   switch (action.type) {
     case types.ADD_LIST:
       newState = [
@@ -33,28 +34,61 @@ const board = (state = initialState, action) => {
         lists: newState,
         offset: state.offset + 1
       };
+      
     case types.REMOVE_LIST:
+      newList = [...state.lists];
+      newList.splice(action.listIndex, 1);
       return {
-        ...state
+        ...state,
+        lists: newList
       };
+
     case types.ADD_CARD:
       return {
         ...state
       };
+
     case types.REMOVE_CARD:
       return {
         ...state
       };
+
     case types.SET_CARD_CONTENT:
-      const newLists = state.lists;
-      newLists[action.data.listIndex].cards[action.data.cardIndex] = {
-        ...newLists[action.data.listIndex].cards[action.data.cardIndex],
-        content: action.data.content
-      };
       return {
         ...state,
-        lists: newLists
+        lists: state.lists.map((list, listIndex) => {
+          if (listIndex !== action.data.listIndex) {
+            return list;
+          }
+          return {
+            ...list,
+            cards: list.cards.map((card, cardIndex) => {
+              if (cardIndex !== action.data.cardIndex) {
+                return card;
+              }
+              return {
+                ...card,
+                content: action.data.content
+              };
+            })
+          };
+        })
       };
+
+    case types.SET_LIST_NAME:
+      return {
+        ...state,
+        lists: state.lists.map((list, listIndex) => {
+          if (listIndex !== action.data.listIndex) {
+            return list;
+          }
+          return {
+            ...list,
+            name: action.data.listName
+          };
+        })
+      };
+
     case types.RE_ORDER_LIST:
       const listIndex = state.lists.findIndex(list => list.id === action.data.listId);
       const list = state.lists[listIndex];
@@ -72,6 +106,7 @@ const board = (state = initialState, action) => {
         ...state,
         lists: newState
       };
+
     case types.MOVE_CARD_TO_LIST:
       const sourceListIndex = state.lists.findIndex(list => list.id === action.data.sourceListId);
       const sourceList = state.lists[sourceListIndex];

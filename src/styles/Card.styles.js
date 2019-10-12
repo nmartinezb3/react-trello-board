@@ -15,25 +15,3 @@ export const CardContainer = styled.div`
   }
 `;
 
-export const CardText = styled.div`
-  & > * {
-    border: none;
-    outline: none;
-    resize: none;
-    width: 100%;
-    overflow: hidden;
-    margin-top: 7px;
-    margin-bottom: 7px;
-    padding: 6px;
-    margin-left: -8px;
-    &:focus {
-      background-color: ${props => props.theme.focusGray};
-    }
-  }
-`;
-
-export const ButtonContainer = styled.div`
-  position: absolute;
-  top: 2px;
-  right: 3px;
-`;

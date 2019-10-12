@@ -1,6 +1,7 @@
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { BoardContainer } from '../styles/Board.styles';
 import CardList from '../components/CardList';
 import {
@@ -10,7 +11,8 @@ import {
   removeList,
   reOrderList,
   moveCardToList,
-  setCardContent
+  setCardContent,
+  setListName
 } from '../actions/boardActions';
 
 const Board = props => {
@@ -35,18 +37,20 @@ const Board = props => {
   };
   return (
     <div>
-      <BoardContainer countColumns={2 + 3}>
+      <BoardContainer countColumns={5}>
         <DragDropContext onDragEnd={onDragEnd}>
           {props.lists.map((list, listIndex) => (
             <CardList
               key={list.id}
               droppableId={list.id}
-              name={list.name}
+              listName={list.name}
               cards={list.cards}
+              onChangeListName={listName => props.onChangeListName(listIndex, listName)}
+              onRemoveList={() => props.onRemoveList(listIndex)}
               onChangeCardContent={(cardIndex, content) =>
                 props.onChangeCardContent(listIndex, cardIndex, content)
               }
-            ></CardList>
+            />
           ))}
         </DragDropContext>
       </BoardContainer>
@@ -60,13 +64,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addCard: (...params) => dispatch(addCard(...params)),
-  removeCard: (...params) => dispatch(removeCard(...params)),
-  addList: (...params) => dispatch(addList(...params)),
-  removeList: (...params) => dispatch(removeList(...params)),
-  reOrderList: (...params) => dispatch(reOrderList(...params)),
-  moveCardToList: (...params) => dispatch(moveCardToList(...params)),
-  onChangeCardContent: (...params) => dispatch(setCardContent(...params))
+  addCard: bindActionCreators(addCard, dispatch),
+  removeCard: bindActionCreators(removeCard, dispatch),
+  addList: bindActionCreators(addList, dispatch),
+  removeList: bindActionCreators(removeList, dispatch),
+  reOrderList: bindActionCreators(reOrderList, dispatch),
+  moveCardToList: bindActionCreators(moveCardToList, dispatch),
+  onChangeCardContent: bindActionCreators(setCardContent, dispatch),
+  onChangeListName: bindActionCreators(setListName, dispatch),
+  onRemoveList: bindActionCreators(removeList, dispatch)
 });
 
 export default connect(

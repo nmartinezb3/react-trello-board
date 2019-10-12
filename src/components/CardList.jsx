@@ -1,13 +1,17 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import Card from './Card';
-import { CardListHeader, CardListContainer } from '../styles/CardList.styles';
+import { CardListContainer } from '../styles/CardList.styles';
+import CardListHeader from './CardListHeader';
 
 const CardList = props => {
   return (
     <div>
-      <CardListHeader>{props.name}</CardListHeader>
-
+      <CardListHeader
+        listName={props.listName}
+        onChangeListName={props.onChangeListName}
+        onRemoveList={props.onRemoveList}
+      />
       <Droppable droppableId={props.droppableId}>
         {(provided, snapshot) => (
           <CardListContainer ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
@@ -17,7 +21,7 @@ const CardList = props => {
                 card={card}
                 index={index}
                 onChangeCardContent={content => props.onChangeCardContent(index, content)}
-              ></Card>
+              />
             ))}
             {provided.placeholder}
           </CardListContainer>

@@ -1,42 +1,53 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import OutsideClickHandler from './OutsideClickHandler';
-import { CardContainer, CardText, ButtonContainer } from '../styles/Card.styles';
+import { CardContainer, CardText } from '../styles/Card.styles';
 import * as UtilsHelper from '../helpers/utils';
-import ContentEditable from 'react-contenteditable';
+import ContentEditable from './ContentEditable';
 
 import IconButton from './IconButton';
 
 const Card = ({ card, index, onChangeCardContent }) => {
-  const [editing, setEditing] = useState(false);
+  const [editCardContent, setEditCardContent] = useState(false);
   const [onHover, setOnHover] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    if (editing) {
+    if (editCardContent) {
       UtilsHelper.focusCursorToEnd(ref);
     }
-  }, [editing]);
+  }, [editCardContent]);
 
-  const [value, setValue] = useState(card.content);
+  const [cardName, setCardName] = useState(card.content);
 
   const onClickOutside = () => {
-    setEditing(false);
-    onChangeCardContent(value);
+    setEditCardContent(false);
+    onChangeCardContent(cardName);
   };
 
   const onClickSaveEdit = () => {
-    if (editing) {
-      onChangeCardContent(value);
+    if (editCardContent) {
+      onChangeCardContent(cardName);
     }
-    setEditing(isEditing => !isEditing);
+    setEditCardContent(iseditCardContent => !iseditCardContent);
   };
 
   const toggleOnHover = () => {
     setOnHover(hover => !hover);
   };
+
+  const handleKeyDown = e => {
+    if (e.key === 'Tab') {
+        e.stopPropagation();
+        e.preventDefault();
+        setEditCardContent(false);
+        ref.current.blur();
+        const cardName = ref.current.innerText;
+        onChangeCardContent(cardName);
+    }
+  };
   return (
-    <OutsideClickHandler shouldListenClick={editing} onClickOutside={onClickOutside}>
+    <OutsideClickHandler shouldListenClick={editCardContent} onClickOutside={onClickOutside}>
       <Draggable key={card.id} draggableId={card.id} index={index}>
         {provided => (
           <CardContainer
@@ -47,23 +58,22 @@ const Card = ({ card, index, onChangeCardContent }) => {
             onMouseEnter={toggleOnHover}
             onMouseLeave={toggleOnHover}
           >
-            {(onHover || editing) && (
-              <ButtonContainer>
+            {(onHover || editCardContent) && (
+              <IconButton.ButtonContainer>
                 <IconButton
                   onClick={onClickSaveEdit}
-                  type={editing ? 'confirm' : 'edit'}
+                  type={editCardContent ? 'confirm' : 'edit'}
                 ></IconButton>
-              </ButtonContainer>
+              </IconButton.ButtonContainer>
             )}
 
-            <CardText innerClassName="cardContentEditable">
-              <ContentEditable
-                innerRef={ref}
-                disabled={!editing}
-                html={value}
-                onChange={e => setValue(e.target.value)}
-              />
-            </CardText>
+            <ContentEditable
+              innerRef={ref}
+              disabled={!editCardContent}
+              html={cardName}
+              onChange={e => setCardName(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
           </CardContainer>
         )}
       </Draggable>

@@ -4,7 +4,8 @@ const theme = {
   primaryFont: '#172b4d',
   lightGray: '#fff',
   mediumGray: '#ebecf0',
-  focusGray: '#f5f5f5'
+  focusGray: '#f5f5f5',
+  draggingOverGray: '#dfe6ff'
 };
 
 export default theme;

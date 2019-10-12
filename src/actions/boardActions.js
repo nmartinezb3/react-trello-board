@@ -5,9 +5,9 @@ export const addList = name => ({
   data: name
 });
 
-export const removeList = index => ({
+export const removeList = listIndex => ({
   type: types.REMOVE_LIST,
-  data: index
+  data: listIndex
 });
 
 export const addCard = (listIndex, cardIndex) => ({
@@ -19,9 +19,15 @@ export const removeCard = (listIndex, cardIndex) => ({
   type: types.REMOVE_CARD,
   data: { listIndex, cardIndex }
 });
+
 export const setCardContent = (listIndex, cardIndex, content) => ({
   type: types.SET_CARD_CONTENT,
   data: { listIndex, cardIndex, content }
+});
+
+export const setListName = (listIndex, listName) => ({
+  type: types.SET_LIST_NAME,
+  data: { listIndex, listName }
 });
 
 export const reOrderList = (listId, cardSourceIndex, cardDestinationIndex) => ({

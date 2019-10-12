@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Button = styled.button`
   border: none;
@@ -18,11 +18,33 @@ const Button = styled.button`
   }
 `;
 
+export const ButtonContainer = styled.div`
+  position: absolute;
+  top: ${props => props.top || '2px'};
+  right: ${props => props.right || '3px'};
+`;
+
+const getIconForType = type => {
+  switch (type) {
+    case 'edit':
+      return faPen;
+    case 'confirm':
+      return faCheck;
+    case 'delete':
+      return faTrashAlt;
+    default:
+      break;
+  }
+};
+
 const IconButton = ({ type, ...props }) => {
   return (
     <Button {...props}>
-      <FontAwesomeIcon icon={type === 'edit' ? faPen : faCheck}></FontAwesomeIcon>
+      <FontAwesomeIcon icon={getIconForType(type)} />
     </Button>
   );
 };
+
+IconButton.ButtonContainer = ButtonContainer;
+
 export default IconButton;
