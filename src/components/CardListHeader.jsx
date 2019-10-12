@@ -70,7 +70,7 @@ const CardListHeader = props => {
           >
             <IconButton
               onClick={onClickSaveEdit}
-              type={editListName ? 'confirm' : 'edit'}
+              iconType={editListName ? 'confirm' : 'edit'}
             />
           </IconButton.ButtonContainer>
         )}
@@ -81,7 +81,7 @@ const CardListHeader = props => {
           >
             <IconButton
               onClick={onClickRemoveList}
-              type="delete"
+              iconType="delete"
             />
           </IconButton.ButtonContainer>
         )}

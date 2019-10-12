@@ -38,15 +38,15 @@ const getIconForType = type => {
   }
 };
 
-const IconButton = ({ type, ...props }) => {
+const IconButton = ({ iconType, ...props }) => {
   return (
     <Button {...props}>
-      <FontAwesomeIcon icon={getIconForType(type)} />
+      <FontAwesomeIcon icon={getIconForType(iconType)} />
     </Button>
   );
 };
 IconButton.propTypes = {
-  type: PropTypes.oneOfType(['edit', 'confirm', 'delete']),
+  iconType: PropTypes.oneOfType(['edit', 'confirm', 'delete']),
 };
 IconButton.ButtonContainer = ButtonContainer;
 

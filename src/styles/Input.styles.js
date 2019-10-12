@@ -17,9 +17,22 @@ export const Input = styled.input`
   padding-right: 30px;
   transition: width 0.15s;
   width: 100%;
+  cursor: pointer;
   &:focus {
+    cursor: unset;
     background-color: white;
     color: ${props => props.theme.primaryFont};
+    ::-webkit-input-placeholder { 
+      color: ${props => props.theme.lightFont};;
+    }
+
+    :-ms-input-placeholder {
+      color: ${props => props.theme.lightFont};;
+    }
+
+    ::placeholder {
+      color: ${props => props.theme.lightFont};;
+    }
   }
   
   ::-webkit-input-placeholder { 

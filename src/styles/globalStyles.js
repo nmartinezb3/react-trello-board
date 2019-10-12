@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
     html,
     body {
-        height: 100%;
         background-color: ${props => props.theme.secondary};
         color: white;
     }

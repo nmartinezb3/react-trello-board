@@ -70,7 +70,7 @@ const Card = ({ card, index, onChangeCardContent }) => {
               <IconButton.ButtonContainer>
                 <IconButton
                   onClick={onClickSaveEdit}
-                  type={editCardContent ? 'confirm' : 'edit'}
+                  iconType={editCardContent ? 'confirm' : 'edit'}
                 />
               </IconButton.ButtonContainer>
             )}

@@ -16,5 +16,9 @@ export const CardListHeader = styled.div`
   font-weight: 600;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-
+`;
+export const CardListWrapper = styled.div`
+  min-width: 170px;
+  height: 88vh;
+  /* overflow: auto; */
 `;

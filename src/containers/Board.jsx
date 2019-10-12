@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { BoardContainer } from '../styles/Board.styles';
 import CardList from '../components/CardList';
+import AddForm from '../components/AddForm';
 import {
   addCard,
   removeCard,
@@ -39,7 +40,7 @@ const Board = props => {
   };
   return (
     <div>
-      <BoardContainer countColumns={5}>
+      <BoardContainer countColumns={props.lists.length + 1}>
         <DragDropContext onDragEnd={onDragEnd}>
           {props.lists.map((list, listIndex) => (
             <CardList
@@ -53,8 +54,12 @@ const Board = props => {
             />
           ))}
         </DragDropContext>
+        <AddForm
+          onConfirm={props.onAddList}
+          placeholder="+ Add another list"
+          focusPlaceholder="Enter list title"
+        />
       </BoardContainer>
-      <button onClick={() => props.addList('La nueva lista')}> Agregar lista</button>
     </div>
   );
 };
@@ -67,7 +72,7 @@ Board.propTypes = {
   onRemoveList: PropTypes.func,
   onChangeCardContent: PropTypes.func,
   search: PropTypes.string,
-  addList: PropTypes.func,
+  onAddList: PropTypes.func,
 };
 const mapStateToProps = state => ({
   lists: state.board.lists,
@@ -83,7 +88,8 @@ const mapDispatchToProps = dispatch => ({
   moveCardToList: bindActionCreators(moveCardToList, dispatch),
   onChangeCardContent: bindActionCreators(setCardContent, dispatch),
   onChangeListName: bindActionCreators(setListName, dispatch),
-  onRemoveList: bindActionCreators(removeList, dispatch)
+  onRemoveList: bindActionCreators(removeList, dispatch),
+  onAddList: bindActionCreators(addList, dispatch)
 });
 
 export default connect(

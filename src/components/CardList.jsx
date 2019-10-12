@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import Card from './Card';
-import { CardListContainer } from '../styles/CardList.styles';
+import { CardListContainer, CardListWrapper } from '../styles/CardList.styles';
 import CardListHeader from './CardListHeader';
 
 const getFilteredCards = (cards, searchText) => {
@@ -15,7 +15,7 @@ const getFilteredCards = (cards, searchText) => {
 
 const CardList = props => {
   return (
-    <div>
+    <CardListWrapper>
       <CardListHeader
         listName={props.list.name}
         onChangeListName={props.onChangeListName}
@@ -39,7 +39,7 @@ const CardList = props => {
           </CardListContainer>
         )}
       </Droppable>
-    </div>
+    </CardListWrapper>
   );
 };
 
