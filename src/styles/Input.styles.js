@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const Input = styled.input`
   background-color: hsla(0, 0%, 100%, 0.3);
   border-radius: 3px;

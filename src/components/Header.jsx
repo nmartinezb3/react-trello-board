@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   HeaderContainer,
   HeaderLogoContainer,
@@ -6,20 +8,21 @@ import {
   HeaderInputWrapper
 } from '../styles/Header.styles';
 import logo from '../assets/trello-logo.png';
-import { Link } from 'react-router-dom';
-import Input from './Input';
+import SearchInput from './SearchInput';
 
 const Header = () => {
   return (
     <HeaderContainer>
       <HeaderLogoContainer>
         <HeaderInputWrapper>
-          <Input></Input>
+          <SearchInput
+            placeholder="Search cards..."
+          />
         </HeaderInputWrapper>
         <Link to="/">
-          <HeaderLogo src={logo}></HeaderLogo>
+          <HeaderLogo src={logo} />
         </Link>
-        <div></div>
+        <div />
       </HeaderLogoContainer>
     </HeaderContainer>
   );

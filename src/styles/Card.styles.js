@@ -14,4 +14,3 @@ export const CardContainer = styled.div`
     cursor: drag;
   }
 `;
-

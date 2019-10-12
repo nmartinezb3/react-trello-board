@@ -12,12 +12,15 @@ const Routes = () => {
         <Switch>
           <Route path="/board">
             <BoardContainer>
-              <Board id="aa"></Board>
+              <Board />
             </BoardContainer>
           </Route>
         </Switch>
       </Route>
-      <Redirect from="/" to="/board" />
+      <Redirect
+        from="/"
+        to="/board"
+      />
     </Router>
   );
 };

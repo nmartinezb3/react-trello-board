@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -47,9 +48,7 @@ const Board = props => {
               cards={list.cards}
               onChangeListName={listName => props.onChangeListName(listIndex, listName)}
               onRemoveList={() => props.onRemoveList(listIndex)}
-              onChangeCardContent={(cardIndex, content) =>
-                props.onChangeCardContent(listIndex, cardIndex, content)
-              }
+              onChangeCardContent={(cardIndex, content) => props.onChangeCardContent(listIndex, cardIndex, content)}
             />
           ))}
         </DragDropContext>
@@ -59,8 +58,17 @@ const Board = props => {
   );
 };
 
+Board.propTypes = {
+  reOrderList: PropTypes.func,
+  moveCardToList: PropTypes.func,
+  lists: PropTypes.array,
+  onChangeListName: PropTypes.func,
+  onRemoveList: PropTypes.func,
+  onChangeCardContent: PropTypes.func,
+  addList: PropTypes.func,
+};
 const mapStateToProps = state => ({
-  lists: state.board.lists
+  lists: state.board.lists,
 });
 
 const mapDispatchToProps = dispatch => ({

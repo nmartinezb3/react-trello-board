@@ -14,12 +14,7 @@ export default class OustideClickHandler extends Component {
     shouldListenClick: true
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-    this.id = randomId();
-  }
+  id = randomId();
 
   componentDidMount() {
     window.addEventListener('click', this.handleOutsideClick);

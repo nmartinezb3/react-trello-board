@@ -2,11 +2,10 @@ import * as types from '../constants/ActionTypes';
 import * as BoardHelper from '../helpers/boardHelper';
 import { randomId } from '../helpers/utils';
 
-const getItems = (count, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k + offset}`,
-    content: `item ${k + offset}`
-  }));
+const getItems = (count, offset = 0) => Array.from({ length: count }, (v, k) => k).map(k => ({
+  id: `item-${k + offset}`,
+  content: `item ${k + offset}`
+}));
 
 const initialState = {
   lists: [
@@ -34,7 +33,7 @@ const board = (state = initialState, action) => {
         lists: newState,
         offset: state.offset + 1
       };
-      
+
     case types.REMOVE_LIST:
       newList = [...state.lists];
       newList.splice(action.listIndex, 1);

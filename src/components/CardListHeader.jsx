@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { CardListHeader } from '../styles/CardList.styles';
+import PropTypes from 'prop-types';
+import { CardListHeader as StyledCardListHeader } from '../styles/CardList.styles';
 import OutsideClickHandler from './OutsideClickHandler';
 import ContentEditable from './ContentEditable';
 import IconButton from './IconButton';
 import * as UtilsHelper from '../helpers/utils';
 
-export default props => {
+const CardListHeader = props => {
   const ref = useRef(null);
   const [onHover, setOnHover] = useState(false);
   const [editListName, setEditListName] = useState(false);
@@ -42,13 +43,19 @@ export default props => {
       e.preventDefault();
       setEditListName(false);
       ref.current.blur();
-      const listName = ref.current.innerText;
-      props.onChangeListName(listName);
+      const name = ref.current.innerText;
+      props.onChangeListName(name);
     }
   };
   return (
-    <OutsideClickHandler shouldListenClick={editListName} onClickOutside={onClickOutside}>
-      <CardListHeader onMouseEnter={toggleOnHover} onMouseLeave={toggleOnHover}>
+    <OutsideClickHandler
+      shouldListenClick={editListName}
+      onClickOutside={onClickOutside}
+    >
+      <StyledCardListHeader
+        onMouseEnter={toggleOnHover}
+        onMouseLeave={toggleOnHover}
+      >
         <ContentEditable
           innerRef={ref}
           html={listName}
@@ -57,16 +64,36 @@ export default props => {
           style={{ paddingRight: 24 }}
         />
         {(onHover || editListName) && (
-          <IconButton.ButtonContainer top="11px" right={editListName ? '11px' : '30px'}>
-            <IconButton onClick={onClickSaveEdit} type={editListName ? 'confirm' : 'edit'} />
+          <IconButton.ButtonContainer
+            top="11px"
+            right={editListName ? '11px' : '30px'}
+          >
+            <IconButton
+              onClick={onClickSaveEdit}
+              type={editListName ? 'confirm' : 'edit'}
+            />
           </IconButton.ButtonContainer>
         )}
         {onHover && !editListName && (
-          <IconButton.ButtonContainer top="11px" right="11px">
-            <IconButton onClick={onClickRemoveList} type="delete" />
+          <IconButton.ButtonContainer
+            top="11px"
+            right="11px"
+          >
+            <IconButton
+              onClick={onClickRemoveList}
+              type="delete"
+            />
           </IconButton.ButtonContainer>
         )}
-      </CardListHeader>
+      </StyledCardListHeader>
     </OutsideClickHandler>
   );
 };
+
+CardListHeader.propTypes = {
+  listName: PropTypes.string,
+  onChangeListName: PropTypes.func,
+  onRemoveList: PropTypes.func,
+};
+
+export default CardListHeader;

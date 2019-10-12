@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Draggable } from 'react-beautiful-dnd';
 import OutsideClickHandler from './OutsideClickHandler';
-import { CardContainer, CardText } from '../styles/Card.styles';
+import { CardContainer } from '../styles/Card.styles';
 import * as UtilsHelper from '../helpers/utils';
 import ContentEditable from './ContentEditable';
 
@@ -38,17 +39,24 @@ const Card = ({ card, index, onChangeCardContent }) => {
 
   const handleKeyDown = e => {
     if (e.key === 'Tab') {
-        e.stopPropagation();
-        e.preventDefault();
-        setEditCardContent(false);
-        ref.current.blur();
-        const cardName = ref.current.innerText;
-        onChangeCardContent(cardName);
+      e.stopPropagation();
+      e.preventDefault();
+      setEditCardContent(false);
+      ref.current.blur();
+      const name = ref.current.innerText;
+      onChangeCardContent(name);
     }
   };
   return (
-    <OutsideClickHandler shouldListenClick={editCardContent} onClickOutside={onClickOutside}>
-      <Draggable key={card.id} draggableId={card.id} index={index}>
+    <OutsideClickHandler
+      shouldListenClick={editCardContent}
+      onClickOutside={onClickOutside}
+    >
+      <Draggable
+        key={card.id}
+        draggableId={card.id}
+        index={index}
+      >
         {provided => (
           <CardContainer
             ref={provided.innerRef}
@@ -63,7 +71,7 @@ const Card = ({ card, index, onChangeCardContent }) => {
                 <IconButton
                   onClick={onClickSaveEdit}
                   type={editCardContent ? 'confirm' : 'edit'}
-                ></IconButton>
+                />
               </IconButton.ButtonContainer>
             )}
 
@@ -81,4 +89,9 @@ const Card = ({ card, index, onChangeCardContent }) => {
   );
 };
 
+Card.propTypes = {
+  card: PropTypes.object,
+  index: PropTypes.number,
+  onChangeCardContent: PropTypes.func,
+};
 export default Card;

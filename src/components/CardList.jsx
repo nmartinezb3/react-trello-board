@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import Card from './Card';
 import { CardListContainer } from '../styles/CardList.styles';
@@ -31,4 +32,12 @@ const CardList = props => {
   );
 };
 
+CardList.propTypes = {
+  cards: PropTypes.object,
+  onChangeCardContent: PropTypes.func,
+  listName: PropTypes.string,
+  onChangeListName: PropTypes.func,
+  onRemoveList: PropTypes.func,
+  droppableId: PropTypes.string
+};
 export default CardList;

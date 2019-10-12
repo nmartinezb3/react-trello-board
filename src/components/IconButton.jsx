@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -44,7 +45,9 @@ const IconButton = ({ type, ...props }) => {
     </Button>
   );
 };
-
+IconButton.propTypes = {
+  type: PropTypes.oneOfType(['edit', 'confirm', 'delete']),
+};
 IconButton.ButtonContainer = ButtonContainer;
 
 export default IconButton;
