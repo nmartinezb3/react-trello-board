@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 export const Input = styled.input`
-  background-color: hsla(0, 0%, 100%, 0.3);
+  background-color: ${props => props.value ? 'white' : (props.gray ? props.theme.mediumGray : '#5FA3D3')};
   border-radius: 3px;
   border: none;
   box-shadow: none;
   box-sizing: border-box;
-  color: white;
+  color: ${props => props.theme.primaryFont};
   float: left;
   font-size: 13px;
   height: 32px;
@@ -18,6 +18,19 @@ export const Input = styled.input`
   transition: width 0.15s;
   width: 100%;
   cursor: pointer;
+  
+  ::-webkit-input-placeholder { 
+    color: ${props => props.darkFont ? props.theme.primaryFont : 'white'};
+  }
+
+  :-ms-input-placeholder {
+    color: ${props => props.darkFont ? props.theme.primaryFont : 'white'};
+  }
+
+  ::placeholder {
+    color: ${props => props.darkFont ? props.theme.primaryFont : 'white'};
+  }
+
   &:focus {
     cursor: unset;
     background-color: white;
@@ -34,18 +47,7 @@ export const Input = styled.input`
       color: ${props => props.theme.lightFont};;
     }
   }
-  
-  ::-webkit-input-placeholder { 
-    color: white;
-  }
 
-  :-ms-input-placeholder {
-    color: white;
-  }
-
-  ::placeholder {
-    color: white;
-  }
 `;
 export const InputContainer = styled.div`
   position: relative;

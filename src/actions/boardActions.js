@@ -10,9 +10,9 @@ export const removeList = listIndex => ({
   data: listIndex
 });
 
-export const addCard = (listIndex, cardIndex) => ({
+export const addCard = (listIndex, cardContent) => ({
   type: types.ADD_CARD,
-  data: { listIndex, cardIndex }
+  data: { listIndex, cardContent }
 });
 
 export const removeCard = (listIndex, cardIndex) => ({
@@ -58,5 +58,4 @@ export const moveCardToList = (
 export const setSearch = searchText => ({
   type: types.SET_SEARCH,
   data: searchText
-})
-;
+});

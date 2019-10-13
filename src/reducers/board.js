@@ -12,7 +12,7 @@ const initialState = {
     { id: 'lista1', name: 'Lista 1', cards: getItems(10) },
     { id: 'lista2', name: 'Lista 2', cards: getItems(5, 10) }
   ],
-  offset: 2
+  search: ''
 };
 
 const board = (state = initialState, action) => {
@@ -31,7 +31,7 @@ const board = (state = initialState, action) => {
         {
           id: randomId(),
           name: action.data,
-          cards: getItems(10, 10 * state.offset)
+          cards: []
         }
       ];
       return {
@@ -42,7 +42,7 @@ const board = (state = initialState, action) => {
 
     case types.REMOVE_LIST:
       newList = [...state.lists];
-      newList.splice(action.listIndex, 1);
+      newList.splice(action.data, 1);
       return {
         ...state,
         lists: newList
@@ -50,7 +50,19 @@ const board = (state = initialState, action) => {
 
     case types.ADD_CARD:
       return {
-        ...state
+        ...state,
+        lists: state.lists.map((list, listIndex) => {
+          if (listIndex !== action.data.listIndex) {
+            return list;
+          }
+          return {
+            ...list,
+            cards: [...list.cards, {
+              id: randomId(),
+              content: action.data.cardContent
+            }]
+          };
+        })
       };
 
     case types.REMOVE_CARD:
@@ -113,10 +125,10 @@ const board = (state = initialState, action) => {
       };
 
     case types.MOVE_CARD_TO_LIST:
-      const sourceListIndex = state.lists.findIndex(list => list.id === action.data.sourceListId);
+      const sourceListIndex = state.lists.findIndex(cardList => cardList.id === action.data.sourceListId);
       const sourceList = state.lists[sourceListIndex];
       const destinationListIndex = state.lists.findIndex(
-        list => list.id === action.data.destinationListId
+        cardList => cardList.id === action.data.destinationListId
       );
       const destinationList = state.lists[destinationListIndex];
       const cardSourceIndex = sourceList.cards.findIndex(item => item.id === action.data.cardId);

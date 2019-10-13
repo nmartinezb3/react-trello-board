@@ -8,7 +8,7 @@ const Button = styled.button`
   border: none;
   background: none;
   outline: none;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   width: 25px;
   height: 25px;
   padding: 0;
@@ -46,7 +46,7 @@ const IconButton = ({ iconType, ...props }) => {
   );
 };
 IconButton.propTypes = {
-  iconType: PropTypes.oneOfType(['edit', 'confirm', 'delete']),
+  iconType: PropTypes.oneOf(['edit', 'confirm', 'delete']),
 };
 IconButton.ButtonContainer = ButtonContainer;
 

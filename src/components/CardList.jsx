@@ -4,6 +4,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import Card from './Card';
 import { CardListContainer, CardListWrapper } from '../styles/CardList.styles';
 import CardListHeader from './CardListHeader';
+import AddForm from './AddForm';
 
 const getFilteredCards = (cards, searchText) => {
   if (searchText) {
@@ -36,6 +37,14 @@ const CardList = props => {
               />
             ))}
             {provided.placeholder}
+            <AddForm
+              onConfirm={props.onAddCard}
+              placeholder="+ Add new card"
+              focusPlaceholder="Enter card content"
+              darkFont
+              width="auto"
+              gray
+            />
           </CardListContainer>
         )}
       </Droppable>
@@ -44,11 +53,12 @@ const CardList = props => {
 };
 
 CardList.propTypes = {
-  list: PropTypes.array,
+  list: PropTypes.object,
   searchText: PropTypes.string,
   onChangeCardContent: PropTypes.func,
   onChangeListName: PropTypes.func,
   onRemoveList: PropTypes.func,
-  droppableId: PropTypes.string
+  droppableId: PropTypes.string,
+  onAddCard: PropTypes.func,
 };
 export default CardList;

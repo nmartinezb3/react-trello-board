@@ -33,10 +33,6 @@ const Card = ({ card, index, onChangeCardContent }) => {
     setEditCardContent(iseditCardContent => !iseditCardContent);
   };
 
-  const toggleOnHover = () => {
-    setOnHover(hover => !hover);
-  };
-
   const handleKeyDown = e => {
     if (e.key === 'Tab') {
       e.stopPropagation();
@@ -63,8 +59,8 @@ const Card = ({ card, index, onChangeCardContent }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             style={provided.draggableProps.style}
-            onMouseEnter={toggleOnHover}
-            onMouseLeave={toggleOnHover}
+            onMouseEnter={() => setOnHover(true)}
+            onMouseLeave={() => setOnHover(false)}
           >
             {(onHover || editCardContent) && (
               <IconButton.ButtonContainer>

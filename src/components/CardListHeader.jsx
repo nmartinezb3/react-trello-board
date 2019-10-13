@@ -12,9 +12,6 @@ const CardListHeader = props => {
   const [editListName, setEditListName] = useState(false);
   const [listName, setListName] = useState(props.listName);
 
-  const toggleOnHover = () => {
-    setOnHover(hover => !hover);
-  };
   const onClickSaveEdit = () => {
     if (editListName) {
       props.onChangeListName(listName);
@@ -53,8 +50,8 @@ const CardListHeader = props => {
       onClickOutside={onClickOutside}
     >
       <StyledCardListHeader
-        onMouseEnter={toggleOnHover}
-        onMouseLeave={toggleOnHover}
+        onMouseEnter={() => setOnHover(true)}
+        onMouseLeave={() => setOnHover(false)}
       >
         <ContentEditable
           innerRef={ref}
