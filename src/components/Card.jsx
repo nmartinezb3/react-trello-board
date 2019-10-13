@@ -8,7 +8,7 @@ import ContentEditable from './ContentEditable';
 
 import IconButton from './IconButton';
 
-const Card = ({ card, index, onChangeCardContent }) => {
+const Card = ({ card, index, onChangeCardContent, onRemoveCard }) => {
   const [editCardContent, setEditCardContent] = useState(false);
   const [onHover, setOnHover] = useState(false);
   const ref = useRef(null);
@@ -31,6 +31,9 @@ const Card = ({ card, index, onChangeCardContent }) => {
       onChangeCardContent(cardName);
     }
     setEditCardContent(iseditCardContent => !iseditCardContent);
+  };
+  const onClickRemoveCard = () => {
+    onRemoveCard();
   };
 
   const handleKeyDown = e => {
@@ -63,10 +66,18 @@ const Card = ({ card, index, onChangeCardContent }) => {
             onMouseLeave={() => setOnHover(false)}
           >
             {(onHover || editCardContent) && (
-              <IconButton.ButtonContainer>
+              <IconButton.ButtonContainer right="22px">
                 <IconButton
                   onClick={onClickSaveEdit}
                   iconType={editCardContent ? 'confirm' : 'edit'}
+                />
+              </IconButton.ButtonContainer>
+            )}
+            {onHover && !editCardContent && (
+              <IconButton.ButtonContainer>
+                <IconButton
+                  onClick={onClickRemoveCard}
+                  iconType="delete"
                 />
               </IconButton.ButtonContainer>
             )}
@@ -89,5 +100,6 @@ Card.propTypes = {
   card: PropTypes.object,
   index: PropTypes.number,
   onChangeCardContent: PropTypes.func,
+  onRemoveCard: PropTypes.func
 };
 export default Card;

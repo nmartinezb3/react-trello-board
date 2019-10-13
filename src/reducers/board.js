@@ -67,7 +67,18 @@ const board = (state = initialState, action) => {
 
     case types.REMOVE_CARD:
       return {
-        ...state
+        ...state,
+        lists: state.lists.map((list, listIndex) => {
+          if (listIndex !== action.data.listIndex) {
+            return list;
+          }
+          const newCards = [...list.cards];
+          newCards.splice(action.data.cardIndex, 1);
+          return {
+            ...list,
+            cards: newCards
+          };
+        })
       };
 
     case types.SET_CARD_CONTENT:

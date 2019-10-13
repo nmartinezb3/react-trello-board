@@ -14,7 +14,7 @@ import {
   reOrderList,
   moveCardToList,
   setCardContent,
-  setListName,
+  setListName
 } from '../actions/boardActions';
 
 const Board = props => {
@@ -51,6 +51,7 @@ const Board = props => {
               onRemoveList={() => props.onRemoveList(listIndex)}
               onChangeCardContent={(cardIndex, content) => props.onChangeCardContent(listIndex, cardIndex, content)}
               onAddCard={cardContent => props.onAddCard(listIndex, cardContent)}
+              onRemoveCard={cardIndex => props.onRemoveCard(listIndex, cardIndex)}
               searchText={props.search}
             />
           ))}
@@ -74,7 +75,8 @@ Board.propTypes = {
   onChangeCardContent: PropTypes.func,
   search: PropTypes.string,
   onAddList: PropTypes.func,
-  onAddCard: PropTypes.func
+  onAddCard: PropTypes.func,
+  onRemoveCard: PropTypes.func
 };
 const mapStateToProps = state => ({
   lists: state.board.lists,
@@ -92,7 +94,8 @@ const mapDispatchToProps = dispatch => ({
   onChangeListName: bindActionCreators(setListName, dispatch),
   onRemoveList: bindActionCreators(removeList, dispatch),
   onAddList: bindActionCreators(addList, dispatch),
-  onAddCard: bindActionCreators(addCard, dispatch)
+  onAddCard: bindActionCreators(addCard, dispatch),
+  onRemoveCard: bindActionCreators(removeCard, dispatch),
 });
 
 export default connect(
