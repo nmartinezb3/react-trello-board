@@ -9,31 +9,28 @@ import * as UtilsHelper from '../helpers/utils';
 const CardListHeader = props => {
   const ref = useRef(null);
   const [onHover, setOnHover] = useState(false);
-  const [editListName, setEditListName] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [listName, setListName] = useState(props.listName);
   useEffect(() => {
     setListName(props.listName);
   }, [props.listName]);
 
   const onClickSaveEdit = () => {
-    if (editListName) {
+    if (editMode) {
       props.onChangeListName(listName);
     }
-    setEditListName(isEditing => !isEditing);
+    setEditMode(isEditing => !isEditing);
   };
 
-  const onClickRemoveList = () => {
-    props.onRemoveList();
-  };
 
   useEffect(() => {
-    if (editListName) {
+    if (editMode) {
       UtilsHelper.focusCursorToEnd(ref);
     }
-  }, [editListName]);
+  }, [editMode]);
 
   const onClickOutside = () => {
-    setEditListName(false);
+    setEditMode(false);
     props.onChangeListName(listName);
   };
 
@@ -41,7 +38,7 @@ const CardListHeader = props => {
     if (e.key === 'Enter' || e.key === 'Tab') {
       e.stopPropagation();
       e.preventDefault();
-      setEditListName(false);
+      setEditMode(false);
       ref.current.blur();
       const name = ref.current.innerText;
       props.onChangeListName(name);
@@ -49,7 +46,7 @@ const CardListHeader = props => {
   };
   return (
     <OutsideClickHandler
-      shouldListenClick={editListName}
+      shouldListenClick={editMode}
       onClickOutside={onClickOutside}
     >
       <StyledCardListHeader
@@ -63,27 +60,38 @@ const CardListHeader = props => {
           onKeyDown={handleKeyDown}
           style={{ paddingRight: 24 }}
         />
-        {(onHover || editListName) && (
+        {(onHover || editMode) && (
           <IconButton.ButtonContainer
             top="11px"
-            right={editListName ? '11px' : '30px'}
+            right={editMode ? '11px' : '42px'}
           >
             <IconButton
               onClick={onClickSaveEdit}
-              iconType={editListName ? 'confirm' : 'edit'}
+              iconType={editMode ? 'confirm' : 'edit'}
             />
           </IconButton.ButtonContainer>
         )}
-        {onHover && !editListName && (
-          <IconButton.ButtonContainer
-            top="11px"
-            right="11px"
-          >
-            <IconButton
-              onClick={onClickRemoveList}
-              iconType="delete"
-            />
-          </IconButton.ButtonContainer>
+        {onHover && !editMode && (
+          <>
+            <IconButton.ButtonContainer
+              top="11px"
+              right="22px"
+            >
+              <IconButton
+                onClick={props.onDuplicateList}
+                iconType="copy"
+              />
+            </IconButton.ButtonContainer>
+            <IconButton.ButtonContainer
+              top="11px"
+              right="3px"
+            >
+              <IconButton
+                onClick={props.onRemoveList}
+                iconType="delete"
+              />
+            </IconButton.ButtonContainer>
+          </>
         )}
       </StyledCardListHeader>
     </OutsideClickHandler>
@@ -94,6 +102,7 @@ CardListHeader.propTypes = {
   listName: PropTypes.string,
   onChangeListName: PropTypes.func,
   onRemoveList: PropTypes.func,
+  onDuplicateList: PropTypes.func,
 };
 
 export default CardListHeader;

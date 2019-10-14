@@ -21,6 +21,7 @@ const CardList = props => {
         listName={props.list.name}
         onChangeListName={props.onChangeListName}
         onRemoveList={props.onRemoveList}
+        onDuplicateList={props.onDuplicateList}
       />
       <Droppable droppableId={props.droppableId}>
         {(provided, snapshot) => (
@@ -35,6 +36,7 @@ const CardList = props => {
                 index={index}
                 onChangeCardContent={content => props.onChangeCardContent(index, content)}
                 onRemoveCard={() => props.onRemoveCard(index)}
+                onDuplicateCard={() => props.onDuplicateCard(index)}
               />
             ))}
             {provided.placeholder}
@@ -61,6 +63,8 @@ CardList.propTypes = {
   onRemoveList: PropTypes.func,
   droppableId: PropTypes.string,
   onAddCard: PropTypes.func,
-  onRemoveCard: PropTypes.func
+  onRemoveCard: PropTypes.func,
+  onDuplicateCard: PropTypes.func,
+  onDuplicateList: PropTypes.func,
 };
 export default CardList;

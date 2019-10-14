@@ -14,7 +14,9 @@ import {
   reOrderList,
   moveCardToList,
   setCardContent,
-  setListName
+  setListName,
+  duplicateCard,
+  duplicateList
 } from '../actions/boardActions';
 
 const Board = props => {
@@ -49,9 +51,11 @@ const Board = props => {
               list={list}
               onChangeListName={listName => props.onChangeListName(listIndex, listName)}
               onRemoveList={() => props.onRemoveList(listIndex)}
+              onDuplicateList={() => props.onDuplicateList(listIndex)}
               onChangeCardContent={(cardIndex, content) => props.onChangeCardContent(listIndex, cardIndex, content)}
               onAddCard={cardContent => props.onAddCard(listIndex, cardContent)}
               onRemoveCard={cardIndex => props.onRemoveCard(listIndex, cardIndex)}
+              onDuplicateCard={cardIndex => props.onDuplicateCard(listIndex, cardIndex)}
               searchText={props.search}
             />
           ))}
@@ -60,6 +64,7 @@ const Board = props => {
           onConfirm={props.onAddList}
           placeholder="+ Add new list"
           focusPlaceholder="Enter list title"
+          maxWidth="220px"
         />
       </BoardContainer>
     </div>
@@ -72,11 +77,13 @@ Board.propTypes = {
   lists: PropTypes.array,
   onChangeListName: PropTypes.func,
   onRemoveList: PropTypes.func,
+  onDuplicateList: PropTypes.func,
   onChangeCardContent: PropTypes.func,
   search: PropTypes.string,
   onAddList: PropTypes.func,
   onAddCard: PropTypes.func,
-  onRemoveCard: PropTypes.func
+  onRemoveCard: PropTypes.func,
+  onDuplicateCard: PropTypes.func,
 };
 const mapStateToProps = state => ({
   lists: state.board.currentState.lists,
@@ -93,9 +100,11 @@ const mapDispatchToProps = dispatch => ({
   onChangeCardContent: bindActionCreators(setCardContent, dispatch),
   onChangeListName: bindActionCreators(setListName, dispatch),
   onRemoveList: bindActionCreators(removeList, dispatch),
+  onDuplicateList: bindActionCreators(duplicateList, dispatch),
   onAddList: bindActionCreators(addList, dispatch),
   onAddCard: bindActionCreators(addCard, dispatch),
   onRemoveCard: bindActionCreators(removeCard, dispatch),
+  onDuplicateCard: bindActionCreators(duplicateCard, dispatch),
 });
 
 export default connect(

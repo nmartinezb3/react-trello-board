@@ -8,16 +8,16 @@ import ContentEditable from './ContentEditable';
 
 import IconButton from './IconButton';
 
-const Card = ({ card, index, onChangeCardContent, onRemoveCard }) => {
-  const [editCardContent, setEditCardContent] = useState(false);
+const Card = ({ card, index, onChangeCardContent, onRemoveCard, onDuplicateCard }) => {
+  const [editMode, setEditMode] = useState(false);
   const [onHover, setOnHover] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    if (editCardContent) {
+    if (editMode) {
       UtilsHelper.focusCursorToEnd(ref);
     }
-  }, [editCardContent]);
+  }, [editMode]);
 
   const [cardContent, setCardContent] = useState(card.content);
 
@@ -26,25 +26,22 @@ const Card = ({ card, index, onChangeCardContent, onRemoveCard }) => {
   }, [card.content]);
 
   const onClickOutside = () => {
-    setEditCardContent(false);
+    setEditMode(false);
     onChangeCardContent(cardContent);
   };
 
   const onClickSaveEdit = () => {
-    if (editCardContent) {
+    if (editMode) {
       onChangeCardContent(cardContent);
     }
-    setEditCardContent(iseditCardContent => !iseditCardContent);
-  };
-  const onClickRemoveCard = () => {
-    onRemoveCard();
+    setEditMode(iseditMode => !iseditMode);
   };
 
   const handleKeyDown = e => {
     if (e.key === 'Tab') {
       e.stopPropagation();
       e.preventDefault();
-      setEditCardContent(false);
+      setEditMode(false);
       ref.current.blur();
       const name = ref.current.innerText;
       onChangeCardContent(name);
@@ -52,7 +49,7 @@ const Card = ({ card, index, onChangeCardContent, onRemoveCard }) => {
   };
   return (
     <OutsideClickHandler
-      shouldListenClick={editCardContent}
+      shouldListenClick={editMode}
       onClickOutside={onClickOutside}
     >
       <Draggable
@@ -69,26 +66,33 @@ const Card = ({ card, index, onChangeCardContent, onRemoveCard }) => {
             onMouseEnter={() => setOnHover(true)}
             onMouseLeave={() => setOnHover(false)}
           >
-            {(onHover || editCardContent) && (
-              <IconButton.ButtonContainer right="22px">
+            {(onHover || editMode) && (
+              <IconButton.ButtonContainer right={!editMode ? '42px' : undefined}>
                 <IconButton
                   onClick={onClickSaveEdit}
-                  iconType={editCardContent ? 'confirm' : 'edit'}
+                  iconType={editMode ? 'confirm' : 'edit'}
                 />
               </IconButton.ButtonContainer>
             )}
-            {onHover && !editCardContent && (
-              <IconButton.ButtonContainer>
-                <IconButton
-                  onClick={onClickRemoveCard}
-                  iconType="delete"
-                />
-              </IconButton.ButtonContainer>
+            {onHover && !editMode && (
+              <>
+                <IconButton.ButtonContainer right="22px">
+                  <IconButton
+                    onClick={onDuplicateCard}
+                    iconType="copy"
+                  />
+                </IconButton.ButtonContainer>
+                <IconButton.ButtonContainer>
+                  <IconButton
+                    onClick={onRemoveCard}
+                    iconType="delete"
+                  />
+                </IconButton.ButtonContainer>
+              </>
             )}
-
             <ContentEditable
               innerRef={ref}
-              disabled={!editCardContent}
+              disabled={!editMode}
               html={cardContent}
               onChange={e => setCardContent(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -104,6 +108,7 @@ Card.propTypes = {
   card: PropTypes.object,
   index: PropTypes.number,
   onChangeCardContent: PropTypes.func,
-  onRemoveCard: PropTypes.func
+  onRemoveCard: PropTypes.func,
+  onDuplicateCard: PropTypes.func,
 };
 export default Card;

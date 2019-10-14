@@ -3,14 +3,14 @@ import * as BoardHelper from '../helpers/boardHelper';
 import { randomId } from '../helpers/utils';
 
 const getItems = (count, offset = 0) => Array.from({ length: count }, (v, k) => k).map(k => ({
-  id: `item-${k + offset}`,
+  id: randomId(),
   content: `item ${k + offset}`
 }));
 
 const initialState = {
   lists: [
-    { id: 'lista1', name: 'Lista 1', cards: getItems(10) },
-    { id: 'lista2', name: 'Lista 2', cards: getItems(5, 10) }
+    { id: randomId(), name: 'Lista 1', cards: getItems(10) },
+    { id: randomId(), name: 'Lista 2', cards: getItems(5, 10) }
   ],
   search: ''
 };
@@ -40,6 +40,23 @@ const board = (state = initialState, action) => {
       return {
         ...state,
         lists: newList
+      };
+    case types.DUPLICATE_LIST:
+      const listToDuplicate = state.lists[action.data];
+      return {
+        ...state,
+        lists: [
+          ...state.lists.slice(0, action.data),
+          {
+            ...listToDuplicate,
+            id: randomId(),
+            cards: listToDuplicate.cards.map(card => ({
+              ...card,
+              id: randomId()
+            }))
+          },
+          ...state.lists.slice(action.data)
+        ]
       };
 
     case types.ADD_CARD:
@@ -71,6 +88,27 @@ const board = (state = initialState, action) => {
           return {
             ...list,
             cards: newCards
+          };
+        })
+      };
+    case types.DUPLICATE_CARD:
+      return {
+        ...state,
+        lists: state.lists.map((list, listIndex) => {
+          if (listIndex !== action.data.listIndex) {
+            return list;
+          }
+          const cardToDuplicate = list.cards[action.data.cardIndex];
+          return {
+            ...list,
+            cards: [
+              ...list.cards.slice(0, action.data.cardIndex),
+              {
+                ...cardToDuplicate,
+                id: randomId()
+              },
+              ...list.cards.slice(action.data.cardIndex)
+            ]
           };
         })
       };

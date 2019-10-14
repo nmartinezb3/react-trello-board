@@ -10,6 +10,11 @@ export const removeList = listIndex => ({
   data: listIndex
 });
 
+export const duplicateList = listIndex => ({
+  type: types.DUPLICATE_LIST,
+  data: listIndex
+});
+
 export const addCard = (listIndex, cardContent) => ({
   type: types.ADD_CARD,
   data: { listIndex, cardContent }
@@ -17,6 +22,11 @@ export const addCard = (listIndex, cardContent) => ({
 
 export const removeCard = (listIndex, cardIndex) => ({
   type: types.REMOVE_CARD,
+  data: { listIndex, cardIndex }
+});
+
+export const duplicateCard = (listIndex, cardIndex) => ({
+  type: types.DUPLICATE_CARD,
   data: { listIndex, cardIndex }
 });
 

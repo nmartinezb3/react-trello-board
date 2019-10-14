@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faCheck, faTrashAlt, faUndo, faRedo } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faCheck, faTrashAlt, faUndo, faRedo, faCopy } from '@fortawesome/free-solid-svg-icons';
 
 const Button = styled.button`
   border: none;
   background: none;
   outline: none;
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   padding: 0;
   border-radius: 3px;
   color: ${props => props.iconType === 'undo' || props.iconType === 'redo' ? props.theme.whiteIcon : props.theme.grayIcon};
@@ -41,8 +41,10 @@ const getIconForType = type => {
       return faUndo;
     case 'redo':
       return faRedo;
+    case 'copy':
+      return faCopy;
     default:
-      break;
+      return null;
   }
 };
 
@@ -54,7 +56,7 @@ const IconButton = props => {
   );
 };
 IconButton.propTypes = {
-  iconType: PropTypes.oneOf(['edit', 'confirm', 'delete', 'undo', 'redo']),
+  iconType: PropTypes.oneOf(['edit', 'confirm', 'delete', 'undo', 'redo', 'copy']),
 };
 IconButton.ButtonContainer = ButtonContainer;
 

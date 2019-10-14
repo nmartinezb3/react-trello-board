@@ -5,6 +5,7 @@ import { Input } from '../styles/Input.styles';
 import IconButton from './IconButton';
 
 export const AddButtonForm = styled.form`
+    max-width: ${props => props.maxWidth};
     min-width: 154px;
     font-size: 14px;
     height: 41px;
@@ -40,6 +41,7 @@ const AddForm = props => {
       <AddButtonForm
         onSubmit={onSubmit}
         width={props.width}
+        maxWidth={props.maxWidth}
       >
         <Input
           ref={ref}
@@ -52,18 +54,18 @@ const AddForm = props => {
           darkFont={props.darkFont}
           gray={props.gray}
         />
+        {value && (
+        <IconButton.ButtonContainer
+          top="4px"
+        >
+          <IconButton
+            onClick={onSubmit}
+            iconType="confirm"
+            disabled={!value}
+          />
+        </IconButton.ButtonContainer>
+        )}
       </AddButtonForm>
-      {value && (
-      <IconButton.ButtonContainer
-        top="4px"
-      >
-        <IconButton
-          onClick={onSubmit}
-          iconType="confirm"
-          disabled={!value}
-        />
-      </IconButton.ButtonContainer>
-      )}
     </div>
   );
 };
@@ -75,5 +77,6 @@ AddForm.propTypes = {
   darkFont: PropTypes.bool,
   gray: PropTypes.bool,
   width: PropTypes.string,
+  maxWidth: PropTypes.string,
 };
 export default AddForm;
