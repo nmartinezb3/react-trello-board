@@ -19,12 +19,6 @@ const board = (state = initialState, action) => {
   let newState;
   let newList;
   switch (action.type) {
-    case types.SET_SEARCH:
-      return {
-        ...state,
-        search: action.data
-      };
-
     case types.ADD_LIST:
       newState = [
         ...state.lists,

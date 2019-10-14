@@ -19,16 +19,20 @@ const Card = ({ card, index, onChangeCardContent, onRemoveCard }) => {
     }
   }, [editCardContent]);
 
-  const [cardName, setCardName] = useState(card.content);
+  const [cardContent, setCardContent] = useState(card.content);
+
+  useEffect(() => {
+    setCardContent(card.content);
+  }, [card.content]);
 
   const onClickOutside = () => {
     setEditCardContent(false);
-    onChangeCardContent(cardName);
+    onChangeCardContent(cardContent);
   };
 
   const onClickSaveEdit = () => {
     if (editCardContent) {
-      onChangeCardContent(cardName);
+      onChangeCardContent(cardContent);
     }
     setEditCardContent(iseditCardContent => !iseditCardContent);
   };
@@ -85,8 +89,8 @@ const Card = ({ card, index, onChangeCardContent, onRemoveCard }) => {
             <ContentEditable
               innerRef={ref}
               disabled={!editCardContent}
-              html={cardName}
-              onChange={e => setCardName(e.target.value)}
+              html={cardContent}
+              onChange={e => setCardContent(e.target.value)}
               onKeyDown={handleKeyDown}
             />
           </CardContainer>

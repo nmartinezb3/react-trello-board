@@ -5,6 +5,7 @@ import { Input } from '../styles/Input.styles';
 import IconButton from './IconButton';
 
 export const AddButtonForm = styled.form`
+    min-width: 154px;
     font-size: 14px;
     height: 41px;
     display: flex;

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faCheck, faTrashAlt, faUndo, faRedo } from '@fortawesome/free-solid-svg-icons';
 
 const Button = styled.button`
   border: none;
@@ -13,9 +13,13 @@ const Button = styled.button`
   height: 25px;
   padding: 0;
   border-radius: 3px;
-  color: #939393;
+  color: ${props => props.iconType === 'undo' || props.iconType === 'redo' ? props.theme.whiteIcon : props.theme.grayIcon};
+  font-size: ${props => props.fontSize || ''};
+  opacity: ${props => props.disabled ? '0.5' : '1'};
   &:hover {
-    background-color: #f3f3f3;
+    ${props => !props.disabled && css`
+      background-color: ${props.iconType === 'undo' || props.iconType === 'redo' ? props.theme.blueHover : props.theme.grayHover};
+    `};
   }
 `;
 
@@ -33,20 +37,24 @@ const getIconForType = type => {
       return faCheck;
     case 'delete':
       return faTrashAlt;
+    case 'undo':
+      return faUndo;
+    case 'redo':
+      return faRedo;
     default:
       break;
   }
 };
 
-const IconButton = ({ iconType, ...props }) => {
+const IconButton = props => {
   return (
     <Button {...props}>
-      <FontAwesomeIcon icon={getIconForType(iconType)} />
+      <FontAwesomeIcon icon={getIconForType(props.iconType)} />
     </Button>
   );
 };
 IconButton.propTypes = {
-  iconType: PropTypes.oneOf(['edit', 'confirm', 'delete']),
+  iconType: PropTypes.oneOf(['edit', 'confirm', 'delete', 'undo', 'redo']),
 };
 IconButton.ButtonContainer = ButtonContainer;
 

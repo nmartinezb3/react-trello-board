@@ -79,8 +79,8 @@ Board.propTypes = {
   onRemoveCard: PropTypes.func
 };
 const mapStateToProps = state => ({
-  lists: state.board.lists,
-  search: state.board.search,
+  lists: state.board.currentState.lists,
+  search: state.search,
 });
 
 const mapDispatchToProps = dispatch => ({

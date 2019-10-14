@@ -53,9 +53,3 @@ export const moveCardToList = (
     cardDestinationIndex
   }
 });
-
-
-export const setSearch = searchText => ({
-  type: types.SET_SEARCH,
-  data: searchText
-});

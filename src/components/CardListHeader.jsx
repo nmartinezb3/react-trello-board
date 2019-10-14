@@ -11,6 +11,9 @@ const CardListHeader = props => {
   const [onHover, setOnHover] = useState(false);
   const [editListName, setEditListName] = useState(false);
   const [listName, setListName] = useState(props.listName);
+  useEffect(() => {
+    setListName(props.listName);
+  }, [props.listName]);
 
   const onClickSaveEdit = () => {
     if (editListName) {

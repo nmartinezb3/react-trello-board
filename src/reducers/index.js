@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
-import board from './board';
+import board from './boardReducer';
+import search from './searchReducer';
+import stateHistoryEnhancer from './stateHistoryEnhancer';
 
 const rootReducer = combineReducers({
-  board
+  board: stateHistoryEnhancer(board),
+  search
 });
 
 export default rootReducer;

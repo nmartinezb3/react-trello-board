@@ -25,3 +25,7 @@ export const HeaderInputWrapper = styled.div`
   justify-self: flex-start;
   margin-left: 4px;
 `;
+export const HeaderIconsContainer = styled.div`
+  justify-self: flex-end;
+  margin-right: 4px;
+`;

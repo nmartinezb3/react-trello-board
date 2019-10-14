@@ -8,12 +8,14 @@ import {
   HeaderContainer,
   HeaderLogoContainer,
   HeaderLogo,
-  HeaderInputWrapper
+  HeaderInputWrapper,
+  HeaderIconsContainer
 } from '../styles/Header.styles';
 import logo from '../assets/trello-logo.png';
 import SearchInput from './SearchInput';
-
-import { setSearch } from '../actions/boardActions';
+import { undoAction, redoAction } from '../actions/undoActions';
+import { setSearch } from '../actions/searchActions';
+import IconButton from './IconButton';
 
 const Header = props => {
   return (
@@ -29,7 +31,21 @@ const Header = props => {
         <Link to="/board">
           <HeaderLogo src={logo} />
         </Link>
-        <div />
+        <HeaderIconsContainer>
+          <IconButton
+            fontSize="15px"
+            onClick={props.undoAction}
+            disabled={!props.hasPreviousStates}
+            iconType="undo"
+          />
+          <IconButton
+            fontSize="15px"
+            onClick={props.redoAction}
+            disabled={!props.hasNextStates}
+            iconType="redo"
+          />
+
+        </HeaderIconsContainer>
       </HeaderLogoContainer>
     </HeaderContainer>
   );
@@ -38,13 +54,21 @@ const Header = props => {
 Header.propTypes = {
   search: PropTypes.string,
   setSearch: PropTypes.func,
+  undoAction: PropTypes.func,
+  redoAction: PropTypes.func,
+  hasPreviousStates: PropTypes.bool,
+  hasNextStates: PropTypes.bool,
 };
 const mapStateToProps = state => ({
-  search: state.board.search
+  search: state.search,
+  hasNextStates: state.board.futureStates.length > 0,
+  hasPreviousStates: state.board.previousStates.length > 0
 });
 
 const mapDispatchToProps = dispatch => ({
-  setSearch: bindActionCreators(setSearch, dispatch)
+  setSearch: bindActionCreators(setSearch, dispatch),
+  undoAction: bindActionCreators(undoAction, dispatch),
+  redoAction: bindActionCreators(redoAction, dispatch)
 });
 
 export default connect(

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from './devices';
 
 export const BoardContainer = styled.div`
   height: 100%;
@@ -7,5 +8,8 @@ export const BoardContainer = styled.div`
   grid-gap: 13px;
   margin: 10px;
   margin-top: 45px;
-  /* overflow-x: auto; */
+  @media device and ${device.tabletLandscape} {
+    overflow-x: auto;
+  }
+  
 `;
