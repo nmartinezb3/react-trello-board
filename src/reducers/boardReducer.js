@@ -1,18 +1,10 @@
 import * as types from '../constants/ActionTypes';
 import * as BoardHelper from '../helpers/boardHelper';
 import { randomId } from '../helpers/utils';
-
-const getItems = (count, offset = 0) => Array.from({ length: count }, (v, k) => k).map(k => ({
-  id: randomId(),
-  content: `item ${k + offset}`
-}));
+import mockData from '../helpers/mockData';
 
 const initialState = {
-  lists: [
-    { id: randomId(), name: 'Lista 1', cards: getItems(10) },
-    { id: randomId(), name: 'Lista 2', cards: getItems(5, 10) }
-  ],
-  search: ''
+  lists: mockData,
 };
 
 const board = (state = initialState, action) => {
