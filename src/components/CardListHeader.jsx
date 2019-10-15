@@ -57,6 +57,7 @@ const CardListHeader = props => {
           innerRef={ref}
           html={listName}
           onChange={e => setListName(e.target.value)}
+          onFocus={() => setEditMode(true)}
           onKeyDown={handleKeyDown}
           style={{ paddingRight: 24 }}
         />
