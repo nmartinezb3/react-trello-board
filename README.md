@@ -2,7 +2,7 @@
 
 A Trello board clone made with React + Redux
 
-Available in [https://react-trello-board.netlify.com](https://react-trello-board.netlify.com)
+Available in [https://react-trello-board.nmartinez.dev](https://react-trello-board.nmartinez.dev)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/f336af86-d8e1-4af0-b9bf-690f0cfca282/deploy-status)](https://app.netlify.com/sites/react-trello-board/deploys)
 
